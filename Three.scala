@@ -13,7 +13,7 @@ object Three extends Input:
     var v: View[String] = input.view
     val p = diffs.indices.iterator
     while (v.tail.nonEmpty && p.hasNext) {
-      val x = p.next()
+      val x = p.next
       val n = v.map(_ (x)).map { case '0' => -1; case '1' => 1 }.sum
       v = v.filter(_ (x).equals(if (n < 0 == criteria) '0' else '1'))
     }

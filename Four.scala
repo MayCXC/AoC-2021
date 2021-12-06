@@ -22,7 +22,7 @@ object Four extends Input:
     draw <- draws.inits.to(LazyList).reverse
     board <- boards
     score <- findScore(draw, board)
-  yield score * draw.last
+  yield score*draw.last
 
   println(winner)
 
@@ -31,7 +31,7 @@ object Four extends Input:
     board <- boards
     score <- Option.when(findScore(draw.init, board).isEmpty)(draw, board)
       .flatMap(findScore)
-  yield score * draw.last
+  yield score*draw.last
 
   println(loser)
 }

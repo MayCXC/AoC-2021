@@ -11,13 +11,12 @@ object Five extends Input:
     if(y1 == y2) (x1 toby x2).foreach(x => diagram((x,y1)) += 1)
   }
 
-  println(diagram.count{ case ((x,y),n) => n>1 })
+  println(diagram.count{ case (x,y) -> n => n > 1 })
 
-  vents.foreach{
-    case (x1,y1) -> (x2,y2) =>
-      if(x1 != x2 && y1 != y2) (x1 toby x2).zip(y1 toby y2)
-        .foreach((x,y) => diagram((x,y)) += 1)
+  vents.foreach{ case (x1,y1) -> (x2,y2) =>
+    if(x1 != x2 && y1 != y2) (x1 toby x2).zip(y1 toby y2)
+      .foreach((x,y) => diagram((x,y)) += 1)
   }
 
-  println(diagram.count{ case ((x,y),n) => n>1 })
+  println(diagram.count{ case (x,y) -> n => n > 1 })
 }

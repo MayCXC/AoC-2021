@@ -8,7 +8,7 @@ object Four extends Input:
         .prepended(0)
         .appended(tail.length)
         .sliding(2)
-        .map { case Seq(l, r) => (l + 1 until r)
+        .map{ case Seq(l, r) => (l + 1 until r)
           .map(tail)
           .map(_.trim.split("\\s+").map(_.toInt).toSeq)
         }.toSeq

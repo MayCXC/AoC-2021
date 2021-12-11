@@ -12,7 +12,7 @@ object Two extends Input:
 
   println(pos * dep)
 
-  val (pos_aim, dep_aim, _) = parse.foldLeft((0, 0, 0)) {
+  val (pos_aim, dep_aim, _) = parse.foldLeft((0, 0, 0)){
     case ((x1, y1, a), (x2, y2)) =>
       if (y2 != 0) (x1, y1, a + y2) else
       if (x2 != 0) (x1 + x2, y1 + a * x2, a) else

@@ -8,9 +8,9 @@ object Eight extends Input:
 
   def unmixed = Array("abcefg", "cf", "acdeg", "acdfg", "bcdf", "abdfg", "abdefg", "acf", "abcdefg", "abcdfg")
 
-  def decodeWires(signal: Array[String]): Char => Char =
-    def encode(arr: Array[String]): Char => Int =
-      c => arr.filter(_.contains(c)).map(_.length^1).sum
+  def decodeWires(signal: Array[String]) =
+    def encode(arr: Array[String])(c: Char) =
+      arr.filter(_.contains(c)).map(_.length^1).sum
 
     "abcdefg".groupBy(encode(signal)).map(_.swap).compose(_.toString)
       .andThen("abcdefg".groupBy(encode(unmixed)).andThen(_.head))
@@ -33,10 +33,9 @@ object Eight extends Input:
     ).flatten.zipWithIndex.toMap
   }
 */
-  def decode(signal: Array[String], output: Array[String]): String = {
+  def decode(signal: Array[String], output: Array[String]): String =
     output.map(_.map(decodeWires(signal)).toSet).map(unmixed.map(_.toSet).zipWithIndex.toMap).mkString
 //    output.map(decodeDigits(signal).compose(_.toSet)).mkString
-  }
 
   println(signals.zip(outputs).map(decode.tupled).map(_.toInt).sum)
 }

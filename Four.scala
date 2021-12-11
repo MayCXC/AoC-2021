@@ -14,7 +14,7 @@ object Four extends Input:
         }.toSeq
     )
 
-  def findScore(draw: Seq[Int], board: Seq[Seq[Int]]): Option[Int] = Option.when(
+  def findScore(draw: Seq[Int], board: Seq[Seq[Int]]) = Option.when(
     (board :: board.transpose :: Nil).exists(_.exists(_.toSet.subsetOf(draw.toSet)))
   )(board.flatten.filterNot(draw.toSet).sum)
 
@@ -29,8 +29,7 @@ object Four extends Input:
   val loser #:: _ = for
     draw <- draws.inits.to(LazyList)
     board <- boards
-    score <- Option.when(findScore(draw.init, board).isEmpty)(draw, board)
-      .flatMap(findScore)
+    score <- Option.when(findScore(draw.init, board).isEmpty)(draw, board).flatMap(findScore)
   yield score*draw.last
 
   println(loser)

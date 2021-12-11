@@ -7,14 +7,15 @@ object Three extends Input:
 
   println(gam*eps)
 
-  def rating(sign: Int, tie: Char): Seq[String] => String =
-    case Seq() => ""
-    case diags =>
-      val (k,v) = diags.groupMap(_.head)(_.tail).maxBy((k,v) => (v.length*sign,k.equals(tie)))
-      k + rating(sign,tie)(v.filterNot("".equals))
+  def rating(criteria: Map[Char,Seq[String]] => (Char,Seq[String]))(diagnostics: Seq[String]): String =
+    if(diagnostics.isEmpty) "" else
+      val (k,v) = criteria(diagnostics.groupMap(_.head)(_.tail))
+      k + rating(criteria)(v.filterNot(_.isEmpty))
 
-  val oxygen = Integer.parseInt(rating(1,'1')(input),2)
-  val carbon = Integer.parseInt(rating(-1,'0')(input),2)
+  def o2criteria(k: Char, v: Seq[String]) = (v.length,k.equals('1'))
 
-  println(oxygen*carbon)
+  val oxy = Integer.parseInt(rating(_.maxBy(o2criteria))(input),2)
+  val car = Integer.parseInt(rating(_.minBy(o2criteria))(input),2)
+
+  println(oxy*car)
 }

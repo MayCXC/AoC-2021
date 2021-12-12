@@ -16,7 +16,7 @@ def median[T: Integral](array: Seq[T])(left: T, right: T): (T,T) = {
 
   def ad(b: T): T = array.map(a => (b-a).abs).sum
 
-  if(array.length%2 == 0 && ONE >= (right - left)) {
+  if(array.length%2 == 0 && (right - left) <= ONE) {
     val (adl, adr) = (ad(left),ad(right))
     if(adl < adr) (left,left) else
     if(adl > adr) (right,right) else
@@ -29,7 +29,7 @@ def median[T: Integral](array: Seq[T])(left: T, right: T): (T,T) = {
 
 def median[T: Integral](array: Seq[T]): (T,T) = median(array)(array.min, array.max)
 
-inline def day = 7
+inline def day = 12
 @main def aoc: Any =
   SeqMacro(day,1)
     (
@@ -44,4 +44,5 @@ inline def day = 7
       Nine,   // 566,     891684
       Ten,    // 387363,  4330777059
       Eleven, // 1613,    510
+      Twelve, //
     )

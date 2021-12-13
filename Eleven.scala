@@ -4,40 +4,31 @@ object Eleven extends Input:
 {
   val octopuses = input.map(_.map(_.asDigit).toArray).toArray
 
-  def flash(octo: Array[Array[Int]], flashed: Array[Array[Boolean]])(row: Int, col: Int): Seq[(Int,Int)] =
-    if(octo(row)(col) >= 10 && !flashed(row)(col)){
-      flashed(row)(col) = true
-      for(
-        v <- -1 to 1; h <- -1 to 1
-        if !(v==0 && h==0) && octo.indices.contains(row+v) && octo(row).indices.contains(col+h)
-      ) yield {
-        octo(row+v)(col+h) += 1
-        (row+v,col+h)
-      }
-    }
-    else Seq.empty
+  def step(grid: Array[Array[Int]]): Int =
+    val flashed = grid.map(array => Array.fill(array.length)(false))
 
-  def step(octo: Array[Array[Int]]): Int =
-    val flashed = octo.map(arr => Array.fill(arr.length)(false))
+    def flash(row: Int, col: Int): Unit =
+      grid(row)(col) += 1
 
-    for(row <- octo.indices; col <- octo(row).indices)
-      octo(row)(col) += 1
+      if(grid(row)(col) >= 10 && !flashed(row)(col))
+        flashed(row)(col) = true
 
-    LazyList.iterate(
-      for(row <- octo.indices; col <- octo(row).indices) yield (row,col)
-    )(_.flatMap(flash(octo,flashed))).find(_.isEmpty)
+        for(v <- -1 to 1; h <- -1 to 1 if
+          !(v==0 && h==0) && grid.indices.contains(row+v) && grid(row).indices.contains(col+h)
+        ) flash(row+v,col+h)
 
-    for(row <- octo.indices; col <- octo(row).indices)
+    for(row <- grid.indices; col <- grid(row).indices)
+      flash(row,col)
+
+    for(row <- grid.indices; col <- grid(row).indices)
       if(flashed(row)(col))
-        octo(row)(col) = 0
+        grid(row)(col) = 0
 
     flashed.flatten.count(identity)
 
-  println( LazyList.iterate((octopuses.transpose.transpose,0))((o,i) => (o,step(o)))
-    .take(101).map(_._2).sum
-  )
+  val simulator = LazyList.continually(step(octopuses))
 
-  println( LazyList.iterate((octopuses.transpose.transpose,0,0))((o,i,j) => (o,step(octopuses),j+1))
-    .find((o,i,j) => i == 100).get._3
-  )
+  println(simulator.take(100).sum)
+
+  simulator.zipWithIndex.find((x,y) => x == 100).foreach((x,y) => println(y+1))
 }

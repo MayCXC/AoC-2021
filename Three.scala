@@ -2,8 +2,8 @@ object Three extends Input:
 {
   val diffs = input.transpose.map(_.map{ case '0' => -1; case '1' => 1 }.sum)
 
-  val gam = Integer.parseInt(diffs.map(_ >= 0).map(_.compare(false)).mkString(""), 2)
-  val eps = Integer.parseInt(diffs.map(_ <= 0).map(_.compare(false)).mkString(""), 2)
+  val gam = diffs.map(_ >= 0).map(_.compare(false)).reduceLeft(_<<1|_)
+  val eps = diffs.map(_ <= 0).map(_.compare(false)).reduceLeft(_<<1|_)
 
   println(gam*eps)
 

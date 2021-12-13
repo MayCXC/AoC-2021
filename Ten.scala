@@ -8,17 +8,17 @@ object Ten extends Input:
     case head :: tail if "([{<".contains(head) => transform(head :: stack)(tail)
     case head :: tail if ">}])".contains(head) => stack.head :: head :: transform(stack.tail)(tail)
     case head :: tail => head :: transform(stack)(tail)
-    case Nil => '_' :: stack
+    case Nil => ' ' :: stack
   }
 
   val (incomplete, corrupted) = input
     .map(transform(Nil).compose(_.toList))
-    .map(_.mkString.split("_"))
+    .map(_.mkString.split(" "))
     .partition(_.head.grouped(2).map(_.mkString).forall(legal))
 
   println(
     corrupted
-      .flatMap(_.head.grouped(2).map(_.mkString).find(legal.andThen(!_)))
+      .flatMap(_.head.grouped(2).map(_.mkString).find(!legal(_)))
       .map(_.tail.head)
       .map(Map(')'->3, ']'->57, '}'->1197, '>'->25137))
       .sum
@@ -26,9 +26,6 @@ object Ten extends Input:
 
   val autocomplete = incomplete
     .map(_.tail.head.map(Map('('->1, '['->2, '{'->3, '<'->4)).foldLeft(BigInt("0"))((l,r) => l*5+r))
-    .sorted
-
-//  println(autocomplete(autocomplete.length/2))
 
   println(median(autocomplete)._1)
 }

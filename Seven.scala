@@ -1,5 +1,5 @@
 object Seven extends Input:
-{ // Another approach is https://en.wikipedia.org/wiki/Average_absolute_deviation#Minimization
+{ // Measure of location approaches are https://en.wikipedia.org/wiki/Average_absolute_deviation#Minimization
 
   val positions = input.head.split(",").map(_.toInt)
 

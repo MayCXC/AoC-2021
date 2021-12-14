@@ -1,8 +1,6 @@
-import scala.annotation.tailrec
-
 extension (x: Int) inline def toby(inline y: Int) = x to y by y.compareTo(x)|1
 
-@tailrec // median as argmin of absolute deviation via bisection method on its derivative a la radix sort
+@scala.annotation.tailrec // median as argmin of absolute deviation via bisection method on its derivative a la radix sort
 def median[T: Integral](array: Seq[T])(left: T, right: T): (T,T) = {
   import math.Integral.Implicits.infixIntegralOps
   import math.Ordering.Implicits.infixOrderingOps
@@ -14,22 +12,24 @@ def median[T: Integral](array: Seq[T])(left: T, right: T): (T,T) = {
   val mid = (left+right)/TWO
   val ddx = array.map(a => (mid-a).sign).sum
 
-  def ad(b: T): T = array.map(a => (b-a).abs).sum
+  def adv(b: T): T = array.map(a => (b-a).abs).sum
 
-  if(array.length%2 == 0 && (right - left) <= ONE) {
-    val (adl, adr) = (ad(left),ad(right))
-    if(adl < adr) (left,left) else
-    if(adl > adr) (right,right) else
-      (left,right)
-  }
+  def fit(lmax: T, rmin: T) =
+    val (l, r) = (array.filter(_<=lmax).max, array.filter(_>=rmin).min)
+    val (adl, adr) = (adv(l), adv(r))
+    if(adl < adr) (l,l) else
+    if(adl > adr) (r,r) else
+      (l,r)
+
+  if(right - left <= ONE) fit(left,right)
   else if(ddx < ZERO) median(array)(mid,right)
   else if(ddx > ZERO) median(array)(left,mid)
-  else (mid,mid)
+  else fit(mid,mid)
 }
 
 def median[T: Integral](array: Seq[T]): (T,T) = median(array)(array.min, array.max)
 
-inline def day = 11
+inline def day = 14
 @main def aoc: Any =
   SeqMacro(day,1)
     (
@@ -45,5 +45,6 @@ inline def day = 11
       Ten,      // 387363,  4330777059
       Eleven,   // 1613,    510
       Twelve,   // 3679,    107395
-      Thirteen,  // 785,    FJAHJGAH
+      Thirteen, // 785,     FJAHJGAH
+      Fourteen, //
     )

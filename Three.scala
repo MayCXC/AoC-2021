@@ -12,10 +12,10 @@ object Three extends Input:
       val (k,v) = criteria(diagnostics.groupMap(_.head)(_.tail))
       k + rating(criteria)(v.filterNot(_.isEmpty))
 
-  def o2criteria(k: Char, v: Seq[String]) = (v.length,k.equals('1'))
+  def criteria(k: Char, v: Seq[String]) = (v.length,k.equals('1'))
 
-  val oxy = Integer.parseInt(rating(_.maxBy(o2criteria))(input),2)
-  val car = Integer.parseInt(rating(_.minBy(o2criteria))(input),2)
+  val oxy = Integer.parseInt(rating(_.maxBy(criteria))(input),2)
+  val car = Integer.parseInt(rating(_.minBy(criteria))(input),2)
 
   println(oxy*car)
 }

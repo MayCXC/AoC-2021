@@ -1,6 +1,7 @@
 extension (x: Int) inline def toby(inline y: Int) = x to y by y.compareTo(x)|1
 
-@scala.annotation.tailrec // median as argmin of absolute deviation via bisection method on its derivative a la radix sort
+// median as argmin of absolute deviation via bisection method on its derivative a la radix sort
+@scala.annotation.tailrec
 def median[T: Integral](array: Seq[T])(left: T, right: T): (T,T) = {
   import math.Integral.Implicits.infixIntegralOps
   import math.Ordering.Implicits.infixOrderingOps
@@ -29,7 +30,7 @@ def median[T: Integral](array: Seq[T])(left: T, right: T): (T,T) = {
 
 def median[T: Integral](array: Seq[T]): (T,T) = median(array)(array.min, array.max)
 
-inline def day = 14
+inline def day = 15
 @main def aoc: Any =
   SeqMacro(day,1)
     (
@@ -46,5 +47,6 @@ inline def day = 14
       Eleven,   // 1613,    510
       Twelve,   // 3679,    107395
       Thirteen, // 785,     FJAHJGAH
-      Fourteen, //
+      Fourteen, // 2602,    2942885922173
+      Fifteen,  //
     )

@@ -30,7 +30,7 @@ def median[T: Integral](array: Seq[T])(left: T, right: T): (T,T) = {
 
 def median[T: Integral](array: Seq[T]): (T,T) = median(array)(array.min, array.max)
 
-inline def day = 15
+inline def day = 16
 @main def aoc: Any =
   SeqMacro(day,1)
     (
@@ -48,5 +48,6 @@ inline def day = 15
       Twelve,   // 3679,    107395
       Thirteen, // 785,     FJAHJGAH
       Fourteen, // 2602,    2942885922173
-      Fifteen,  //
+      Fifteen,  // 462,     2846
+      Sixteen,  // 969,     124921618408
     )

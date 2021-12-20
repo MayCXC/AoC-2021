@@ -39,11 +39,11 @@ object Sixteen extends Input:
 
   val hierarchy :: Nil = decode(binary)
 
-  def version_sum: Packet => Int =
+  def versum: Packet => Int =
     case Literal(version, id, value) => version
-    case Operator(version, id, sub) => version + sub.map(version_sum).sum
+    case Operator(version, id, sub) => version + sub.map(versum).sum
 
-  println(version_sum(hierarchy))
+  println(versum(hierarchy))
 
   def evaluate: Packet => BigInt =
     case Literal(_, _, value) => value

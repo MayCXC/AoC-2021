@@ -2,7 +2,7 @@ extension (x: Int) inline def toby(inline y: Int) = x to y by y.compareTo(x)|1
 
 // median as argmin of absolute deviation via bisection method on its derivative a la radix sort
 @scala.annotation.tailrec
-def median[T: Integral](array: Seq[T])(left: T, right: T): (T,T) = {
+def median[T: Integral](array: Iterable[T])(left: T, right: T): (T,T) = {
   import math.Integral.Implicits.infixIntegralOps
   import math.Ordering.Implicits.infixOrderingOps
 
@@ -28,26 +28,39 @@ def median[T: Integral](array: Seq[T])(left: T, right: T): (T,T) = {
   else fit(mid,mid)
 }
 
-def median[T: Integral](array: Seq[T]): (T,T) = median(array)(array.min, array.max)
+def median[T: Integral](array: Iterable[T]): (T,T) = median(array)(array.min, array.max)
 
-inline def day = 16
+def sqrtish(x: BigInt): BigInt = {
+  def helper(x: BigInt): BigInt = {
+    val y = BigInt(1) << (x.bitLength >> 1)
+    y + (x+1)/y
+  }
+  helper((x-4)>>2)
+}
+
+inline def day = 21
 @main def aoc: Any =
   SeqMacro(day,1)
     (
-      One,      // 1791,    1822
-      Two,      // 1693300, 1857958050
-      Three,    // 2648450, 2845944
-      Four,     // 41668,   10478
-      Five,     // 6283,    18864
-      Six,      // 380243,  1708791884591
-      Seven,    // 355764,  99634572
-      Eight,    // 344,     1048410
-      Nine,     // 566,     891684
-      Ten,      // 387363,  4330777059
-      Eleven,   // 1613,    510
-      Twelve,   // 3679,    107395
-      Thirteen, // 785,     FJAHJGAH
-      Fourteen, // 2602,    2942885922173
-      Fifteen,  // 462,     2846
-      Sixteen,  // 969,     124921618408
+      One,        // 1791,    1822
+      Two,        // 1693300, 1857958050
+      Three,      // 2648450, 2845944
+      Four,       // 41668,   10478
+      Five,       // 6283,    18864
+      Six,        // 380243,  1708791884591
+      Seven,      // 355764,  99634572
+      Eight,      // 344,     1048410
+      Nine,       // 566,     891684
+      Ten,        // 387363,  4330777059
+      Eleven,     // 1613,    510
+      Twelve,     // 3679,    107395
+      Thirteen,   // 785,     FJAHJGAH
+      Fourteen,   // 2602,    2942885922173
+      Fifteen,    // 462,     2846
+      Sixteen,    // 969,     124921618408
+      Seventeen,  //
+      Eighteen,   //
+      Nineteen,   //
+      Twenty,     //
+      TwentyOnem  //
     )

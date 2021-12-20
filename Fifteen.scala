@@ -4,7 +4,7 @@ object Fifteen extends Input:
 {
   val cavern = Array.tabulate(input.length, input.head.length)((y,x) => input(y)(x).asDigit)
   val entire = Array.tabulate(5*cavern.length,5*cavern.head.length)(
-    (y,x) => Math.floorMod(cavern(y%cavern.length)(x%cavern.head.length)+y/cavern.length+x/cavern.head.length-1,9)+1
+    (y,x) => Math.floorMod(cavern(y%cavern.length)(x%cavern.head.length)+y/cavern.length+x/cavern(y%cavern.length).length-1,9)+1
   )
 
   for(cave <- Seq(cavern, entire))

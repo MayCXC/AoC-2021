@@ -1,5 +1,3 @@
-import scala.annotation.tailrec
-
 object Ten extends Input:
 {
   def legal = Set("()","[]","{}","<>")

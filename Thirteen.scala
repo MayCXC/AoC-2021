@@ -1,5 +1,3 @@
-import scala.annotation.tailrec
-
 object Thirteen extends Input:
 {
   val (dots, _ :: inst) = input.span(_.nonEmpty)

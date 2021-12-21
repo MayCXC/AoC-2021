@@ -62,5 +62,6 @@ inline def day = 21
       Eighteen,   //
       Nineteen,   //
       Twenty,     //
-      TwentyOnem  //
+      TwentyOne,  //
+      TwentyTwo
     )

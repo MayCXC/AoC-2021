@@ -7,4 +7,4 @@ My setup is just the standard library, a text editor with autocomplete, and a te
 
 So far all the solutions performed well until day twenty, then my approach to iterative closest point was way too slow. This might be improved using the median absolute deviation heuristic, and being more confident to find triangles with matching side lengths instead of points with similar cube shells.
 
-Twenty-one is pretty slow too, and it would be nice to make it work for the example input and the actual input.
+Twenty-one is pretty slow too, and it would be nice to make it work for the example input as well as the actual input.
